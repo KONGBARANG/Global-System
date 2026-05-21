@@ -40,10 +40,18 @@ def init_db():
             customer_phone TEXT,
             customer_id INTEGER DEFAULT NULL,
             item_details TEXT,
+            customer_location TEXT DEFAULT NULL,
             status TEXT DEFAULT 'កំពុងដឹកជញ្ជូន',
             dispatch_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+
+    # ប្រសិនបើ database មាន dispatches table មុនទៀត និងគ្មាន customer_location column,
+    # ធ្វើ ALTER TABLE ដើម្បីបន្ថែមវា ដោយគ្មានបំលែងសារសំខាន់
+    cursor.execute("PRAGMA table_info(dispatches)")
+    dispatch_columns = [row[1] for row in cursor.fetchall()]
+    if "customer_location" not in dispatch_columns:
+        cursor.execute("ALTER TABLE dispatches ADD COLUMN customer_location TEXT DEFAULT NULL")
     
     conn.commit()
     conn.close()

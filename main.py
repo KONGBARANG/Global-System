@@ -41,7 +41,7 @@ async def main():
     # បន្ថែម Handlers ដូចមុន
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("help", help_command))
-    application.add_handler(MessageHandler(filters.TEXT | filters.CONTACT, handle_normal_message))
+    application.add_handler(MessageHandler(filters.TEXT | filters.CONTACT | filters.LOCATION, handle_normal_message))
 
     # រត់ Bot រហូត
     async with application:
