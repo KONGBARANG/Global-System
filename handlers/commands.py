@@ -99,11 +99,12 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         welcome_text = (
             f"👋 សួស្តីសមាជិកថ្មី លោក/អ្នក {first_name}! មកកាន់ប្រព័ន្ធដឹកជញ្ជូន GS។\n\n"
             "🙏 ដើម្បីភាពងាយស្រួលក្នុងការទទួលទិន្នន័យអីវ៉ាន់ និងការទាក់ទងពីអ្នកដឹកជញ្ជូន "
-            "សូមចុចប៊ូតុងខាងក្រោមដើម្បីចែករំលែកលេខទូរសព្ទរបស់អ្នកជាមុនសិនបាទ។"
+            "សូមចុចប៊ូតុងខាងក្រោមដើម្បីចែករំលែកលេខទូរសព្ទ ឬផ្ញើទីតាំងស្កេនទំនិញ។"
         )
         keyboard = [
             [{"text": "📱 ចែកលេខទូរសព្ទ", "request_contact": True}],
             [{"text": "📍 ផ្ញើទីតាំង", "request_location": True}],
+            [{"text": "🧾 ស្កេនទំនិញ", "request_location": True}],
             [{"text": "📦 ពិនិត្យមើលអីវ៉ាន់បច្ចុប្បន្ន"}],
             [{"text": "📞 ទាក់ទងភ្នាក់ងារផ្ទាល់"}]
         ]
@@ -136,6 +137,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"{delivery_info}\n\n"
             "👉 សូមជ្រើសរើសសេវាកម្ម៖\n"
             "📍 /share_location - ផ្ញើទីតាំងទៅកាន់អ្នកដឹកជញ្ជូន\n"
+            "🧾 /scan_location - ស្កេនកន្លែងទំនិញ\n"
             "🔍 /track - តាមដានស្ថានភាពអីវ៉ាន់លម្អិត"
         )
         await update.message.reply_text(welcome_text)
@@ -152,6 +154,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/start - ពិនិត្យមើលគណនី និងប្រវត្តិផ្ញើ\n"
         "/help - មើលការណែនាំឡើងវិញ\n"
         "/share_location - ផ្ញើទីតាំងទៅកាន់អ្នកដឹកជញ្ជូន\n"
+        "/scan_location - ស្កេនកន្លែងទំនិញ\n"
         "/track - តាមដានស្ថានភាពអីវ៉ាន់"
     )
     await update.message.reply_text(help_text)
@@ -161,6 +164,14 @@ async def share_location_command(update: Update, context: ContextTypes.DEFAULT_T
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
     await update.message.reply_text(
         "📍 សូមចុចប៊ូតុងខាងក្រោមដើម្បីផ្ញើទីតាំងបច្ចុប្បន្នក្នុងជំរាបអ្នកដឹកជញ្ជូន។",
+        reply_markup=reply_markup
+    )
+
+async def scan_location_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [[{"text": "🧾 ស្កេនទំនិញ", "request_location": True}]]
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
+    await update.message.reply_text(
+        "🧾 សូមចុចប៊ូតុងខាងក្រោមដើម្បីផ្ញើទីតាំងស្កេនទំនិញរបស់អ្នក។",
         reply_markup=reply_markup
     )
 

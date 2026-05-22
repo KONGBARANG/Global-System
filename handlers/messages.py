@@ -121,7 +121,7 @@ async def handle_normal_message(update: Update, context: ContextTypes.DEFAULT_TY
     text_received = message.text.strip()
     
     # 🌟 មុខងារឆ្លាតវ័យ៖ ឆែកមើលអីវ៉ាន់បច្ចុប្បន្នសម្រាប់អតិថិជន
-    if text_received == "� ផ្ញើទីតាំង":
+    if text_received == "📍 ផ្ញើទីតាំង":
         keyboard = [[{"text": "📍 ផ្ញើទីតាំង", "request_location": True}]]
         reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
         await message.reply_text(
@@ -130,7 +130,16 @@ async def handle_normal_message(update: Update, context: ContextTypes.DEFAULT_TY
         )
         return
 
-    if text_received == "�📦 ពិនិត្យមើលអីវ៉ាន់បច្ចុប្បន្ន":
+    if text_received == "🧾 ស្កេនទំនិញ":
+        keyboard = [[{"text": "🧾 ស្កេនទំនិញ", "request_location": True}]]
+        reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
+        await message.reply_text(
+            "🧾 សូមចុចប៊ូតុងខាងក្រោមដើម្បីផ្ញើទីតាំងស្កេនទំនិញរបស់អ្នក។",
+            reply_markup=reply_markup
+        )
+        return
+
+    if text_received == "📦 ពិនិត្យមើលអីវ៉ាន់បច្ចុប្បន្ន":
         conn = sqlite3.connect("delivery_bot.db")
         cursor = conn.cursor()
         cursor.execute("SELECT item_details, status, dispatch_date FROM dispatches WHERE customer_id = ? ORDER BY dispatch_id DESC LIMIT 1", (user_id,))
